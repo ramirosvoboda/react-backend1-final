@@ -1,0 +1,30 @@
+[
+    {
+        "name": "Producto 1",
+        "price": 100,
+        "category": "Categoría A",
+        "description": "Descripción del Producto 1",
+        "available": true
+    },
+    {
+        "name": "Producto 2",
+        "price": 150,
+        "category": "Categoría B",
+        "description": "Descripción del Producto 2",
+        "available": true
+    },
+    {
+        "name": "Producto 3",
+        "price": 200,
+        "category": "Categoría A",
+        "description": "Descripción del Producto 3",
+        "available": false
+    },
+    {
+        "name": "Producto 4",
+        "price": 250,
+        "category": "Categoría C",
+        "description": "Descripción del Producto 4",
+        "available": true
+    }
+]

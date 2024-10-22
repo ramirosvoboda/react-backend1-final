@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Productos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Lista de Productos</h1>
+    <div id="product-list"></div>
+    <script>
+        async function fetchProducts() {
+            const response = await fetch('/api/products');
+            const data = await response.json();
+            const productList = document.getElementById('product-list');
+
+            data.payload.forEach(product => {
+                const productDiv = document.createElement('div');
+                productDiv.innerHTML = `
+                    <h2>${product.name}</h2>
+                    <p>Precio: $${product.price}</p>
+                    <p>Categoría: ${product.category}</p>
+                    <button onclick="addToCart('${product._id}')">Agregar al Carrito</button>
+                    <a href="/products/${product._id}">Ver Detalles</a>
+                `;
+                productList.appendChild(productDiv);
+            });
+        }
+
+        async function addToCart(productId) {
+            const response = await fetch(`/api/carts/<your_cart_id>/products/${productId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ quantity: 1 }),
+            });
+
+            if (response.ok) {
+                alert('Producto agregado al carrito');
+            } else {
+                alert('Error al agregar producto al carrito');
+            }
+        }
+
+        fetchProducts();
+    </script>
+</body>
+</html>

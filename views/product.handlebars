@@ -1,0 +1,42 @@
+<h1>Detalles del Producto {{productId}}</h1>
+<div id="product-details"></div>
+<button onclick="addToCart('{{productId}}')">Agregar al Carrito</button>
+<a href="/products">Volver a la lista</a>
+
+<script>
+    async function fetchProductDetails() {
+        const response = await fetch(`/api/products/${'{{productId}}'}`);
+        const data = await response.json();
+
+        if (data.status === 'success') {
+            const product = data.payload;
+            const productDetails = document.getElementById('product-details');
+            productDetails.innerHTML = `
+                <h2>${product.name}</h2>
+                <p>Precio: $${product.price}</p>
+                <p>Categoría: ${product.category}</p>
+                <p>Descripción: ${product.description || 'No disponible'}</p>
+            `;
+        } else {
+            document.getElementById('product-details').innerText = 'Producto no encontrado';
+        }
+    }
+
+    async function addToCart(productId) {
+        const response = await fetch(`/api/carts/<your_cart_id>/products/${productId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ quantity: 1 }),
+        });
+
+        if (response.ok) {
+            alert('Producto agregado al carrito');
+        } else {
+            alert('Error al agregar producto al carrito');
+        }
+    }
+
+    fetchProductDetails();
+</script>
